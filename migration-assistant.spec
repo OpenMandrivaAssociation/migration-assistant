@@ -7,6 +7,8 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://launchpadlibrarian.net/7154726/%{name}_%{version}.tar.bz2
+# fix segfault when file has no extension
+Patch0: migration-assistant-extcheck.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -18,6 +20,7 @@ operating systems during the install process.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1 -b .extcheck
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
