@@ -14,6 +14,9 @@ Patch0: migration-assistant-extcheck.patch
 # an additional fix would be to msync() and munmap()
 # http://marc.info/?l=linux-nfs&m=110061860303322&w=2
 Patch1: migration-assistant-close.patch
+# reimplement copy using read/write (like cp) to handle large files
+# we can't mmap() (twice) large files in memory
+Patch2: migration-assistant-nommap.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -27,6 +30,7 @@ operating systems during the install process.
 %setup -q -n %{name}
 %patch0 -p1 -b .extcheck
 %patch1 -p1 -b .close
+%patch2 -p1 -b .nommap
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
