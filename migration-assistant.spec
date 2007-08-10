@@ -1,6 +1,6 @@
 %define name migration-assistant
 %define version 0.4.5
-%define release %mkrel 4
+%define release %mkrel 5
 
 Summary: Migration Assistant
 Name: %{name}
@@ -17,6 +17,8 @@ Patch1: migration-assistant-close.patch
 # reimplement copy using read/write (like cp) to handle large files
 # we can't mmap() (twice) large files in memory
 Patch2: migration-assistant-nommap.patch
+# do not uselessly create directories with uninitialized names
+Patch3: migration-assistant-initmkdir.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -32,6 +34,7 @@ operating systems during the install process.
 %patch0 -p1 -b .extcheck
 %patch1 -p1 -b .close
 %patch2 -p1 -b .nommap
+%patch3 -p1 -b .initmkdir
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
