@@ -19,6 +19,7 @@ Patch1: migration-assistant-close.patch
 Patch2: migration-assistant-nommap.patch
 # do not uselessly create directories with uninitialized names
 Patch3: migration-assistant-initmkdir.patch
+Patch4: migration-assistant-winnt.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -35,6 +36,7 @@ operating systems during the install process.
 %patch1 -p1 -b .close
 %patch2 -p1 -b .nommap
 %patch3 -p1 -b .initmkdir
+%patch4 -p1 -b .winnt
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
