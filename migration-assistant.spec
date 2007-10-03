@@ -1,6 +1,6 @@
 %define name migration-assistant
 %define version 0.5.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Migration Assistant
 Name: %{name}
@@ -22,6 +22,8 @@ Patch3: migration-assistant-initmkdir.patch
 Patch4: migration-assistant-winnt.patch
 # closedir() frees data returned by readdir()
 Patch5:	migration-assistant-closedir.patch
+# handle win2k migration by not trying to import music if not present
+Patch6:	migration-assistant-win2k.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -40,6 +42,7 @@ operating systems during the install process.
 %patch3 -p1 -b .initmkdir
 %patch4 -p1 -b .winnt
 %patch5 -p1 -b .closedir
+%patch6 -p1 -b .win2k
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
