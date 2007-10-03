@@ -1,6 +1,6 @@
 %define name migration-assistant
 %define version 0.5.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Migration Assistant
 Name: %{name}
@@ -24,6 +24,8 @@ Patch4: migration-assistant-winnt.patch
 Patch5:	migration-assistant-closedir.patch
 # handle win2k migration by not trying to import music if not present
 Patch6:	migration-assistant-win2k.patch
+# use XDG directories instead of hardcoded english names
+Patch7:	migration-assistant-xdg.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -43,6 +45,7 @@ operating systems during the install process.
 %patch4 -p1 -b .winnt
 %patch5 -p1 -b .closedir
 %patch6 -p1 -b .win2k
+%patch7 -p1 -b .xdg
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
