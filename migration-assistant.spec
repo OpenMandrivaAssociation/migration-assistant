@@ -1,12 +1,12 @@
 %define name migration-assistant
-%define version 0.5.1
-%define release %mkrel 3
+%define version 0.5.4
+%define release %mkrel 1
 
 Summary: Migration Assistant
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: http://launchpadlibrarian.net/9447580/%{name}_%{version}.tar.bz2
+Source0: http://launchpadlibrarian.net/10012930/%{name}_%{version}.tar.gz
 # fix segfault when file has no extension
 Patch0: migration-assistant-extcheck.patch
 # close file descriptors
