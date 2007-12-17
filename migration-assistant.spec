@@ -29,7 +29,6 @@ Patch7:	migration-assistant-xdg.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: libxml2-devel
 
 %description
