@@ -1,5 +1,5 @@
 %define name migration-assistant
-%define version 0.5.4
+%define version 0.6.0
 %define release %mkrel 1
 
 Summary: Migration Assistant
@@ -37,7 +37,7 @@ Migration Assistant imports documents and settings from other
 operating systems during the install process.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}.trunk
 %patch0 -p1 -b .extcheck
 %patch1 -p1 -b .close
 %patch2 -p1 -b .nommap
