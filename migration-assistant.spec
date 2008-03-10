@@ -6,7 +6,7 @@ Summary: Migration Assistant
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: http://launchpadlibrarian.net/10012930/%{name}_%{version}.tar.gz
+Source0: https://launchpad.net/ubuntu/hardy/+source/%{name}/%{version}/+files/%{name}_%{version}.tar.gz
 # fix segfault when file has no extension
 Patch0: migration-assistant-extcheck.patch
 # close file descriptors
