@@ -28,6 +28,9 @@ Patch6:	migration-assistant-win2k.patch
 Patch7:	migration-assistant-xdg.patch
 # fix segfault by zeroing buffers since strncpy does not write \0 if no byte is copied
 Patch8: migration-assistant-reginit.patch
+# get profiles directory from registry for ma-search-items and ma-import as well
+# ("Documents and Settings" is not correct in Vista)
+Patch9: migration-assistant-profilesdir.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -49,6 +52,7 @@ operating systems during the install process.
 %patch6 -p1 -b .win2k
 %patch7 -p1 -b .xdg
 %patch8 -p1 -b .reginit
+%patch9 -p1 -b .profilesdir
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
