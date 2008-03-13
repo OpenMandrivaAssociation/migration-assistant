@@ -26,6 +26,8 @@ Patch5:	migration-assistant-closedir.patch
 Patch6:	migration-assistant-win2k.patch
 # use XDG directories instead of hardcoded english names
 Patch7:	migration-assistant-xdg.patch
+# fix segfault by zeroing buffers since strncpy does not write \0 if no byte is copied
+Patch8: migration-assistant-reginit.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -46,6 +48,7 @@ operating systems during the install process.
 %patch5 -p1 -b .closedir
 %patch6 -p1 -b .win2k
 %patch7 -p1 -b .xdg
+%patch8 -p1 -b .reginit
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
