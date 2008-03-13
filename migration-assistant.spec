@@ -1,6 +1,6 @@
 %define name migration-assistant
 %define version 0.6.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Migration Assistant
 Name: %{name}
@@ -31,6 +31,10 @@ Patch8: migration-assistant-reginit.patch
 # get profiles directory from registry for ma-search-items and ma-import as well
 # ("Documents and Settings" is not correct in Vista)
 Patch9: migration-assistant-profilesdir.patch
+# filter Public and Default users for Vista (from registry keys)
+# filter "Default User" key in Vista (it is a junction to Default)
+# do not segfault if keys are missing
+Patch10: migration-assistant-vista.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -53,6 +57,7 @@ operating systems during the install process.
 %patch7 -p1 -b .xdg
 %patch8 -p1 -b .reginit
 %patch9 -p1 -b .profilesdir
+%patch10 -p1 -b .vista
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
