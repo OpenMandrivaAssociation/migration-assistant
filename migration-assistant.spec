@@ -1,40 +1,13 @@
 %define name migration-assistant
-%define version 0.6.0
-%define release %mkrel 3
+%define version 0.6.2
+%define release %mkrel 1
 
 Summary: Migration Assistant
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: https://launchpad.net/ubuntu/hardy/+source/%{name}/%{version}/+files/%{name}_%{version}.tar.gz
-# fix segfault when file has no extension
-Patch0: migration-assistant-extcheck.patch
-# close file descriptors
-# the fd leaks made impossible to migrate a big number of files
-# an additional fix would be to msync() and munmap()
-# http://marc.info/?l=linux-nfs&m=110061860303322&w=2
-Patch1: migration-assistant-close.patch
-# reimplement copy using read/write (like cp) to handle large files
-# we can't mmap() (twice) large files in memory
-Patch2: migration-assistant-nommap.patch
-# do not uselessly create directories with uninitialized names
-Patch3: migration-assistant-initmkdir.patch
-Patch4: migration-assistant-winnt.patch
-# closedir() frees data returned by readdir()
-Patch5:	migration-assistant-closedir.patch
-# handle win2k migration by not trying to import music if not present
-Patch6:	migration-assistant-win2k.patch
-# use XDG directories instead of hardcoded english names
+Source0: http://archive.ubuntu.com/ubuntu/pool/main/m/%{name}/%{name}_%{version}.tar.gz
 Patch7:	migration-assistant-xdg.patch
-# fix segfault by zeroing buffers since strncpy does not write \0 if no byte is copied
-Patch8: migration-assistant-reginit.patch
-# get profiles directory from registry for ma-search-items and ma-import as well
-# ("Documents and Settings" is not correct in Vista)
-Patch9: migration-assistant-profilesdir.patch
-# filter Public and Default users for Vista (from registry keys)
-# filter "Default User" key in Vista (it is a junction to Default)
-# do not segfault if keys are missing
-Patch10: migration-assistant-vista.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -47,17 +20,7 @@ operating systems during the install process.
 
 %prep
 %setup -q -n %{name}.trunk
-%patch0 -p1 -b .extcheck
-%patch1 -p1 -b .close
-%patch2 -p1 -b .nommap
-%patch3 -p1 -b .initmkdir
-%patch4 -p1 -b .winnt
-%patch5 -p1 -b .closedir
-%patch6 -p1 -b .win2k
 %patch7 -p1 -b .xdg
-%patch8 -p1 -b .reginit
-%patch9 -p1 -b .profilesdir
-%patch10 -p1 -b .vista
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
