@@ -7,7 +7,8 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://archive.ubuntu.com/ubuntu/pool/main/m/%{name}/%{name}_%{version}.tar.gz
-Patch7:	migration-assistant-xdg.patch
+Patch0:	migration-assistant-xdg.patch
+Patch1:	migration-assistant-0.6.2-fix-str-fmt.patch
 License: GPL
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
@@ -20,7 +21,8 @@ operating systems during the install process.
 
 %prep
 %setup -q -n %{name}.trunk
-%patch7 -p1 -b .xdg
+%patch0 -p1 -b .xdg
+%patch1 -p0
 
 %build
 export CC="gcc $RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
