@@ -1,6 +1,6 @@
 %define name migration-assistant
-%define version 0.6.2
-%define release %mkrel 2
+%define version 0.6.4
+%define release %mkrel 1
 
 Summary: Migration Assistant
 Name: %{name}
@@ -9,7 +9,7 @@ Release: %{release}
 Source0: http://archive.ubuntu.com/ubuntu/pool/main/m/%{name}/%{name}_%{version}.tar.gz
 Patch0:	migration-assistant-xdg.patch
 Patch1:	migration-assistant-0.6.2-fix-str-fmt.patch
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 Url: https://launchpad.net/migration-assistant
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
