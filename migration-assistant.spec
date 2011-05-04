@@ -1,6 +1,6 @@
 %define name migration-assistant
 %define version 0.6.4
-%define release %mkrel 3
+%define release %mkrel 4
 
 Summary: Migration Assistant
 Name: %{name}
