@@ -1,0 +1,134 @@
+--- migration-assistant.trunk/utils.c.xdg	2008-06-25 12:19:14.000000000 +0800
++++ migration-assistant.trunk/utils.c	2008-06-25 12:07:17.000000000 +0800
+@@ -34,7 +34,7 @@
+     char* end;
+     int done = 0;
+     int found;
+-    char* ret = "";
++    char* ret;
+     struct dirent *de;
+     int cwd;
+     
+@@ -383,6 +383,45 @@
+     xmlSaveFormatFile(file, doc, 1);
+     free(file);
+ }
++
++/*
++  see ~/.config/user-dirs.dirs for a list of possible types
++  perl -ne '/^XDG_(.*)_DIR=/ and print "$1\n"' ~a/.config/user-dirs.dirs 
++  DESKTOP
++  DOWNLOAD
++  DOCUMENTS
++  MUSIC
++  PICTURES
++  VIDEOS
++*/
++char* get_xdg_dir (const char* home, const char* type, const char* fallback) {
++    FILE* f;
++    char cmd[128];
++    char dir[PATH_MAX];
++    char* old_home = getenv("HOME");
++    const char *r;
++    setenv("HOME", home, 1);
++    snprintf(cmd, sizeof(cmd), "xdg-user-dir %s", type);
++    f = popen(cmd, "r");
++    if (!f || !fgets(dir, PATH_MAX-1, f)) {
++        fprintf(stderr, "Warning: could not get XDG dir for %s.\n", type);
++	r = fallback;
++    } else {
++	char *p = dir;
++	while (p && *p) {
++	    if (*p == '\n') {
++		*p = '\0';
++		break;
++	    }
++	    p++;
++	}
++	r = dir;
++    }
++    if (f)
++	pclose(f);
++    setenv("HOME", old_home, 1);
++    return strdup(r);
++}
+ // yikes, get rid of this.
+ void makegconfdirs(const char *dir)
+ {
+--- migration-assistant.trunk/utils.h.xdg	2008-06-25 12:22:36.000000000 +0800
++++ migration-assistant.trunk/utils.h	2008-06-25 12:22:50.000000000 +0800
+@@ -21,6 +21,7 @@
+ void initialize_registry_paths();
+ void initialize_software_registry_path();
+ void initialize_user_registry_path();
++char* get_xdg_dir (const char* home, const char* type, const char* fallback);
+ char* get_profiles_dir(const char *mountpoint);
+ // struct target_t {
+ //  const char* option;
+--- migration-assistant.trunk/windows-import.c.xdg	2008-06-25 12:23:05.000000000 +0800
++++ migration-assistant.trunk/windows-import.c	2008-06-25 12:09:58.000000000 +0800
+@@ -58,18 +58,26 @@
+     }
+     path = reformat_path(mymusic);
+     free(mymusic);
+-    asprintf(&to, "%s/home/%s/Music", to_location, to_user);
++
++    char* home;
++    char* xdg_dir;
++    asprintf(&home, "%s/home/%s", to_location, to_user);
++    xdg_dir = get_xdg_dir(home, "MUSIC", "Music");
++    asprintf(&to, "%s/%s", to_location, xdg_dir);
+     asprintf(&from, "%s/%s", from_location, path);
+     free(path);
++    free(home);
+ 
+     rcopy(from, to);
+     free(from);
+     free(to);
+     
+-    asprintf(&to, "file:///home/%s/Music", to_user);
++    asprintf(&to, "file://%s", xdg_dir);
+     set_gconf_key("/apps/rhythmbox", "library_locations", GCONF_LIST_STRING, to);
+     set_gconf_key("/apps/rhythmbox", "first_time_flag", GCONF_BOOLEAN, "true");
+     set_gconf_key("/apps/rhythmbox", "monitor_library", GCONF_BOOLEAN, "true");
++    
++    free(xdg_dir);
+ }
+ 
+ void windowsxp_import_mypictures (void) {
+@@ -85,9 +93,15 @@
+     path = reformat_path(mypictures);
+     free(mypictures);
+ 
+-    asprintf(&to, "%s/home/%s/Pictures", to_location, to_user);
++    char* home;
++    char* xdg_dir;
++    asprintf(&home, "%s/home/%s", to_location, to_user);
++    xdg_dir = get_xdg_dir(home, "PICTURES", "Pictures");
++    asprintf(&to, "%s/%s", to_location, xdg_dir);
+     asprintf(&from, "%s/%s", from_location, path);
+     free(path);
++    free(home);
++    free(xdg_dir);
+ 
+     rcopy(from, to);
+     free(to);
+@@ -133,10 +147,16 @@
+     while(*mus != '\\') mus--;
+     mus++;
+ 
+-    asprintf(&to, "%s/home/%s/Documents", to_location, to_user);
++    char* home;
++    char* xdg_dir;
++    asprintf(&home, "%s/home/%s", to_location, to_user);
++    xdg_dir = get_xdg_dir(home, "DOCUMENTS", "/home/Documents");
++    asprintf(&to, "%s/%s", to_location, xdg_dir);
+     asprintf(&from, "%s/%s", from_location, path);
+     free(path);
+-
++    free(home);
++    free(xdg_dir);
++    
+     FILE* fp;
+     if((fp = fopen(from, "r")) == NULL) {
+         printf("%s does not exist.\n", from);
