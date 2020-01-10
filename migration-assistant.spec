@@ -16,7 +16,7 @@ operating systems during the install process.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 export CC="gcc %{optflags} -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
