@@ -1,3 +1,5 @@
+%global optflags %{optflags} -fcommon
+
 Summary:	Migration Assistant
 Name:		migration-assistant
 Version:	0.6.12
