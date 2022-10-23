@@ -2,14 +2,13 @@
 
 Summary:	Migration Assistant
 Name:		migration-assistant
-Version:	0.6.12
-Release:	13
+Version:	0.6.13
+Release:	1
 License:	GPLv2+
 Group:		System/Configuration/Other
 Url:		https://launchpad.net/migration-assistant
-Source0:	http://archive.ubuntu.com/ubuntu/pool/main/m/%{name}/%{name}_%{version}.tar.gz
+Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/migration-assistant/%{version}/migration-assistant_%{version}.tar.gz
 Patch0:		migration-assistant-xdg.patch
-Patch1:		migration-assistant-0.6.2-fix-str-fmt.patch
 BuildRequires:	pkgconfig(libxml-2.0)
 
 %description
