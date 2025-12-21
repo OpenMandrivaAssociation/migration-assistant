@@ -9,6 +9,7 @@ Group:		System/Configuration/Other
 Url:		https://launchpad.net/migration-assistant
 Source0:	https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/migration-assistant/%{version}/migration-assistant_%{version}.tar.gz
 Patch0:		migration-assistant-xdg.patch
+BuildRequires:	make
 BuildRequires:	pkgconfig(libxml-2.0)
 
 %description
