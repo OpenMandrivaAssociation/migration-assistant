@@ -1,4 +1,4 @@
-%global optflags %{optflags} -fcommon
+%global optflags %{optflags} -fcommon -Wno-implicit-function-declaration
 
 Summary:	Migration Assistant
 Name:		migration-assistant
