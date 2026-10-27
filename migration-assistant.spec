@@ -3,7 +3,7 @@
 Summary:	Migration Assistant
 Name:		migration-assistant
 Version:	0.6.13
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Configuration/Other
 Url:		https://launchpad.net/migration-assistant
